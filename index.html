@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Curiculum Vitae - Bintang Arya</title>
+
+  <style>
+    /* --- tampilan Umum ---*/
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #d6eceb; /* warna latar hijau muda */
+      color: #082d2b; /* warna teks utama */
+      margin: 40px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .box {
+      background-color: #cceeee;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      color: #024b48;
+      border-bottom: 2px solid #028a85;
+      padding-bottom: 5px;
+    }
+
+    strong {
+      color: #014d4a;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    footer {
+      background-color: #025e58;
+      color: #cceeee;
+      text-align: center;
+      padding: 10px;
+      margin-top: 30px;
+      border-radius: 5px;
+      grid-column: span 2;
+    }
+
+    /* --- Header di atas --- */
+    .hero {
+      background-color: #002b36;
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .profile-pic {
+      background: linear-gradient(135deg, #00bcd4, #673ab7);
+      color: white;
+      font-weight: bold;
+      font-size: 28px;
+      width: 80px;
+      height: 80px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero button {
+      background-color: #00bcd4;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: fit-content;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔹 Bagian Header di paling atas -->
+  <header class="hero">
+    <div class="profile-pic">BA</div>
+    <div class="hero-content">
+      <h1>Bintang Arya Putra Hartono</h1>
+      <p>Tugas Membuat CV</p>
+      <p>Membuat solusi web interaktif, ramah pengguna, dan efektif untuk pendidikan.</p>
+      <button>Download CV (PDF)</button>
+    </div>
+  </header>
+
+  <!-- 🔹 Bagian Isi CV -->
+  <div class="container">
+    <div class="box">
+      <h2>Profil Pribadi</h2>
+      <p><strong>Nama:</strong> Bintang Arya Putra Hartono</p>
+      <p><strong>Tempat, tanggal Lahir:</strong> Depok, 04 September 2005</p>
+      <p><strong>Jenis Kelamin:</strong> Laki-laki</p>
+      <p><strong>Agama:</strong> Islam</p>
+      <p><strong>Tinggi Badan:</strong> 181 cm</p>
+      <p><strong>Berat Badan:</strong> 75 kg</p>
+      <p><strong>Alamat:</strong> Jln Mawar 1 No 7812</p>
+      <p><strong>Status:</strong> Mahasiswa</p>
+    </div>
+
+    <div class="box">
+      <h2>Pendidikan</h2>
+      <ul>
+        <li>SDIT 123 Depok</li>
+        <li>SMPIT 3456 Depok</li>
+        <li>SMA 12345 Depok</li>
+        <li>Universitas Gunadarma</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Pengalaman</h2>
+      <ul>
+        <li>Frontend Developer - PT Kecap Asin (2023-Sekarang)</li>
+        <li>Full-Stack Developer - EduPlatform (2023-2024)</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Keahlian</h2>
+      <ul>
+        <li>HTML, CSS, JavaScript</li>
+        <li>React & UI/UX Design</li>
+        <li>Database & SQL</li>
+      </ul>
+    </div>
+
+    <footer>
+      Hubungi saya melalui email atau WhatsApp untuk kerja sama proyek
+    </footer>
+  </div>
+
+</body>
+</html>
