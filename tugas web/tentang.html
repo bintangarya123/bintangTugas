@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami AryaStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Arya<span>Store</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="produk.html"><i class="fas fa-box"></i> Produk ATK</a></li>
+                    <li><a href="keranjang.html"><i class="fas fa-shopping-cart"></i> Keranjang <span class="cart-count">0</span></a></li>
+                    <li><a href="tentang.html" class="active"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
+                    <li><a href="kontak.html"><i class="fas fa-envelope"></i> Kontak</a></li>
+                    <li><a href="checkout.html" class="checkout-btn"><i class="fas fa-credit-card"></i> Checkout</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title"><i class="fas fa-info-circle"></i> Tentang AryaStore</h1>
+        
+        <div class="about-content">
+            <div class="about-section">
+                <h2>Tentang ATK Store</h2>
+                <p>ATK Store didirikan pada tahun 2018 sebagai respons terhadap kebutuhan masyarakat akan penyedia alat tulis kantor yang terpercaya dengan kualitas konsisten. Kami bukan sekadar toko online biasa, melainkan mitra yang memahami bahwa alat tulis berkualitas dapat meningkatkan produktivitas dan kreativitas dalam aktivitas sehari-hari.</p>
+                <p>Komitmen kami: Kami secara ketat melakukan seleksi produk, hanya bekerja sama dengan supplier dan merek terpercaya yang telah terbukti kualitasnya. Setiap produk yang kami jual melalui proses quality control untuk memastikan standar tertinggi sebelum sampai ke tangan Anda.</p>
+
+                <h2>Visi Kami</h2>
+                <p>Menjadi platform terdepan di Indonesia yang menyediakan produk alat tulis kantor berkualitas tinggi dengan ekosistem pelayanan terintegrasi yang menghubungkan kebutuhan pendidikan, profesional, dan bisnis dalam satu tempat yang terpercaya.</p>
+                <p>Visi detail:</p>
+                <ul>
+                    <li>Terpercaya: Menjadi brand yang selalu diandalkan untuk kualitas dan kejujuran</li>
+                    <li>Inovatif: Selalu menghadirkan produk-produk terkini dengan teknologi terbaru</li>
+                    <li>Aksesibel: Menjangkau seluruh wilayah Indonesia dengan layanan pengiriman yang efisien</li>
+                    <li>Berdaya: Memberikan kontribusi positif terhadap perkembangan pendidikan dan produktivitas nasional</li>
+                    <li>Berkelanjutan: Mengedepankan produk-produk ramah lingkungan dan praktik bisnis yang sustainable</li>
+                </ul>
+
+                <h2>Misi Kami</h2>
+                <ul>
+                    <li>Menyediakan berbagai macam alat tulis dengan kualitas terbaik</li>
+                    <li>Memberikan harga yang kompetitif dan terjangkau</li>
+                    <li>Memberikan pelayanan pelanggan yang ramah dan responsif</li>
+                    <li>Mengutamakan kepuasan pelanggan dalam setiap transaksi</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arya<span>Store</span></h3>
+                     <p>Sebagai toko alat tulis kantor online terpercaya sejak 2018, ATK Store berkomitmen untuk menyediakan produk-produk berkualitas dari merek ternama dengan harga yang kompetitif. 
+        Kami memahami bahwa alat tulis yang baik dapat meningkatkan produktivitas dan kreativitas, oleh karena itu kami hanya menghadirkan produk terbaik untuk mendukung aktivitas 
+        pendidikan, profesional, dan bisnis Anda.</p>
+        <p>Dengan layanan pelanggan yang responsif dan sistem pengiriman yang efisien, kami siap menjadi partner terpercaya untuk semua 
+        kebutuhan alat tulis Anda.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="produk.html">Produk ATK</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hubungi Kami</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Jeruk No. 45, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> (0812) 8765-4321</p>
+                    <p><i class="fas fa-envelope"></i> info@aryastore.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AryaStore Toko Alat Tulis</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle menu untuk mobile
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+        
+        // Update jumlah item di keranjang
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.querySelector('.cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
