@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout AryaStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Arya<span>Store</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="produk.html"><i class="fas fa-box"></i> Produk ATK</a></li>
+                    <li><a href="keranjang.html"><i class="fas fa-shopping-cart"></i> Keranjang <span class="cart-count">0</span></a></li>
+                    <li><a href="tentang.html"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
+                    <li><a href="kontak.html"><i class="fas fa-envelope"></i> Kontak</a></li>
+                    <li><a href="checkout.html" class="checkout-btn active"><i class="fas fa-credit-card"></i> Checkout</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title"><i class="fas fa-credit-card"></i> Checkout Pesanan</h1>
+        
+        <div id="checkoutContent">
+            <!-- Isi checkout akan dimuat via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Modal Notifikasi -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Pesanan Berhasil!</h2>
+            <p>Terima kasih telah berbelanja di ATK Store. Pesanan Anda telah berhasil diproses.</p>
+            
+            <div class="order-details">
+                <p><strong>No. Pesanan:</strong> <span id="orderNumber">ATK-2023-001</span></p>
+                <p><strong>Total Pembayaran:</strong> <span id="orderTotal">Rp 0</span></p>
+                <p><strong>Estimasi Pengiriman:</strong> 2-3 hari kerja</p>
+                <p><strong>Alamat Pengiriman:</strong> <span id="orderAddress">-</span></p>
+            </div>
+            
+            <p>Kami akan mengirimkan konfirmasi pesanan ke email Anda.</p>
+            
+            <div class="modal-buttons">
+                <button id="backToHome" class="btn">Kembali ke Beranda</button>
+                <button id="printReceipt" class="btn-outline"><i class="fas fa-print"></i> Cetak Struk</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arya<span>Store</span></h3>
+                    <p>Sebagai toko alat tulis kantor online terpercaya sejak 2018, ATK Store berkomitmen untuk menyediakan produk-produk berkualitas dari merek ternama dengan harga yang kompetitif. 
+        Kami memahami bahwa alat tulis yang baik dapat meningkatkan produktivitas dan kreativitas, oleh karena itu kami hanya menghadirkan produk terbaik untuk mendukung aktivitas 
+        pendidikan, profesional, dan bisnis Anda.</p>
+        <p>Dengan layanan pelanggan yang responsif dan sistem pengiriman yang efisien, kami siap menjadi partner terpercaya untuk semua 
+        kebutuhan alat tulis Anda.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="produk.html">Produk ATK</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hubungi Kami</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Jeruk No. 45, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> (0812) 8765-4321</p>
+                    <p><i class="fas fa-envelope"></i> info@aryastore.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Arya Store - Toko Alat Tulis</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Ambil keranjang dari localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Fungsi untuk menampilkan checkout
+        function displayCheckout() {
+            const checkoutContent = document.getElementById('checkoutContent');
+            
+            if (cart.length === 0) {
+                checkoutContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-bag fa-3x"></i>
+                        <h2>Belum Ada Pesanan</h2>
+                        <p>Keranjang belanja Anda masih kosong. Silakan tambahkan produk terlebih dahulu sebelum melakukan checkout.</p>
+                        <a href="produk.html" class="btn">Belanja Sekarang</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Hitung total harga
+            let totalPrice = 0;
+            cart.forEach(item => {
+                const priceNum = item.priceNum || parseInt(item.price.replace(/\D/g, ''));
+                totalPrice += priceNum * item.quantity;
+            });
+            
+            const shippingCost = 15000;
+            const grandTotal = totalPrice + shippingCost;
+            
+            checkoutContent.innerHTML = `
+                <div class="checkout-container">
+                    <div class="checkout-form">
+                        <h2>Informasi Pengiriman</h2>
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap *</label>
+                            <input type="text" id="name" placeholder="Masukkan nama lengkap" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" placeholder="contoh@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">No. Telepon *</label>
+                                <input type="tel" id="phone" placeholder="0812-3456-7890" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Alamat Lengkap *</label>
+                            <textarea id="address" rows="3" placeholder="Jl. Contoh No. 123, Kota, Kode Pos" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">Kota *</label>
+                                <input type="text" id="city" placeholder="Nama kota" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="postalCode">Kode Pos *</label>
+                                <input type="text" id="postalCode" placeholder="12345" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shippingMethod">Metode Pengiriman *</label>
+                            <select id="shippingMethod">
+                                <option value="regular">Reguler (2-3 hari) - Rp 15.000</option>
+                                <option value="express">Express (1 hari) - Rp 25.000</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paymentMethod">Metode Pembayaran *</label>
+                            <select id="paymentMethod">
+                                <option value="transfer">Transfer Bank</option>
+                                <option value="cod">Cash on Delivery (COD)</option>
+                                <option value="e-wallet">E-Wallet</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Catatan (Opsional)</label>
+                            <textarea id="notes" rows="2" placeholder="Catatan tambahan untuk pesanan"></textarea>
+                        </div>
+                        
+                        <button id="placeOrder" class="btn" style="width: 100%; padding: 15px; font-size: 1.1rem;">Proses Pesanan</button>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <h2>Ringkasan Pesanan</h2>
+                        ${cart.map(item => {
+                            const priceNum = item.priceNum || parseInt(item.price.replace(/\D/g, ''));
+                            const itemTotal = priceNum * item.quantity;
+                            return `
+                                <div class="order-item">
+                                    <span>${item.name} (${item.quantity}x)</span>
+                                    <span>Rp ${itemTotal.toLocaleString('id-ID')}</span>
+                                </div>
+                            `;
+                        }).join('')}
+                        
+                        <div class="order-item">
+                            <span>Subtotal</span>
+                            <span>Rp ${totalPrice.toLocaleString('id-ID')}</span>
+                        </div>
+                        
+                        <div class="order-item">
+                            <span>Ongkos Kirim</span>
+                            <span>Rp ${shippingCost.toLocaleString('id-ID')}</span>
+                        </div>
+                        
+                        <div class="order-total">
+                            <span>Total</span>
+                            <span>Rp ${grandTotal.toLocaleString('id-ID')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Event listener untuk tombol proses pesanan
+            document.getElementById('placeOrder').addEventListener('click', function() {
+                // Validasi form
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                const city = document.getElementById('city').value;
+                const postalCode = document.getElementById('postalCode').value;
+                
+                if (!name || !email || !phone || !address || !city || !postalCode) {
+                    alert('Harap lengkapi semua informasi yang diperlukan!');
+                    return;
+                }
+                
+                // Tampilkan modal notifikasi
+                showOrderNotification(name, address, grandTotal);
+            });
+        }
+        
+        // Fungsi untuk menampilkan notifikasi pesanan berhasil
+        function showOrderNotification(name, address, total) {
+            // Generate nomor pesanan acak
+            const orderNumber = 'ATK-' + Date.now().toString().slice(-6);
+            
+            // Update informasi di modal
+            document.getElementById('orderNumber').textContent = orderNumber;
+            document.getElementById('orderTotal').textContent = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('orderAddress').textContent = address;
+            
+            // Tampilkan modal
+            const modal = document.getElementById('orderModal');
+            modal.style.display = 'flex';
+            
+            // Event listener untuk tombol kembali ke beranda
+            document.getElementById('backToHome').addEventListener('click', function() {
+                // Kosongkan keranjang
+                localStorage.removeItem('cart');
+                updateCartCount();
+                
+                // Redirect ke beranda
+                window.location.href = 'index.html';
+            });
+            
+            // Event listener untuk tombol cetak struk
+            document.getElementById('printReceipt').addEventListener('click', function() {
+                printReceipt(name, address, total, orderNumber);
+            });
+        }
+        
+        // Fungsi untuk cetak struk
+        function printReceipt(name, address, total, orderNumber) {
+            const receiptContent = `
+                <html>
+                <head>
+                    <title>Struk Pesanan ATK Store</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; max-width: 400px; margin: 0 auto; }
+                        h1 { color: #2c3e50; text-align: center; margin-bottom: 20px; }
+                        .receipt-info { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px dashed #ddd; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+                        .total { font-weight: bold; font-size: 1.2em; border-top: 2px solid #333; }
+                        .thank-you { margin-top: 30px; text-align: center; color: #666; }
+                        .store-info { text-align: center; margin-bottom: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="store-info">
+                        <h1>ATK Store</h1>
+                        <p>Jl. Pendidikan No. 45, Jakarta</p>
+                        <p>Telp: (021) 8765-4321</p>
+                    </div>
+                    
+                    <div class="receipt-info">
+                        <p><strong>No. Pesanan:</strong> ${orderNumber}</p>
+                        <p><strong>Tanggal:</strong> ${new Date().toLocaleDateString('id-ID')} ${new Date().toLocaleTimeString('id-ID')}</p>
+                        <p><strong>Nama:</strong> ${name}</p>
+                        <p><strong>Alamat:</strong> ${address}</p>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>Qty</th>
+                                <th>Harga</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${cart.map(item => {
+                                const priceNum = item.priceNum || parseInt(item.price.replace(/\D/g, ''));
+                                const itemTotal = priceNum * item.quantity;
+                                return `
+                                    <tr>
+                                        <td>${item.name}</td>
+                                        <td>${item.quantity}</td>
+                                        <td>Rp ${priceNum.toLocaleString('id-ID')}</td>
+                                        <td>Rp ${itemTotal.toLocaleString('id-ID')}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">Ongkos Kirim</td>
+                                <td>Rp 15.000</td>
+                            </tr>
+                            <tr class="total">
+                                <td colspan="3"><strong>TOTAL</strong></td>
+                                <td><strong>Rp ${total.toLocaleString('id-ID')}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <div class="thank-you">
+                        <p><strong>Terima kasih telah berbelanja di ATK Store!</strong></p>
+                        <p>Pesanan Anda akan diproses dalam 1x24 jam.</p>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(receiptContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+        
+        // Fungsi untuk update jumlah item di keranjang
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        // Toggle menu untuk mobile
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            displayCheckout();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
