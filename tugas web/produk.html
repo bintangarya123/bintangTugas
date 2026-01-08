@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk ATK AryaStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="store.html" class="logo">Arya<span>Store</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="produk.html" class="active"><i class="fas fa-box"></i> Produk ATK</a></li>
+                    <li><a href="keranjang.html"><i class="fas fa-shopping-cart"></i> Keranjang <span id="cartCount">0</span></a></li>
+                    <li><a href="tentang.html"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
+                    <li><a href="kontak.html"><i class="fas fa-envelope"></i> Kontak</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title"><i class="fas fa-box"></i> Semua Produk ATK</h1>
+        
+        <div class="filter-section">
+            <h3>Filter Kategori ATK:</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">Semua</button>
+                <button class="filter-btn" onclick="filterProducts('alat-tulis')">Alat Tulis</button>
+                <button class="filter-btn" onclick="filterProducts('kertas-buku')">Kertas & Buku</button>
+                <button class="filter-btn" onclick="filterProducts('perlengkapan')">Perlengkapan Kantor</button>
+            </div>
+        </div>
+        
+        <div class="products-grid" id="productsContainer">
+            <!-- Produk akan dimuat di sini -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arya<span>Store</span></h3>
+                    <p>Sebagai toko alat tulis kantor online terpercaya sejak 2018, ATK Store berkomitmen untuk menyediakan produk-produk berkualitas dari merek ternama dengan harga yang kompetitif. 
+        Kami memahami bahwa alat tulis yang baik dapat meningkatkan produktivitas dan kreativitas, oleh karena itu kami hanya menghadirkan produk terbaik untuk mendukung aktivitas 
+        pendidikan, profesional, dan bisnis Anda.</p>
+        <p>Dengan layanan pelanggan yang responsif dan sistem pengiriman yang efisien, kami siap menjadi partner terpercaya untuk semua 
+        kebutuhan alat tulis Anda.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="produk.html">Produk ATK</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hubungi Kami</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Jeruk No. 45, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> (0812) 8765-4321</p>
+                    <p><i class="fas fa-envelope"></i> info@aryastore.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AryaStore Toko Alat Tulis</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DATA PRODUK LANGSUNG DI SINI (tidak perlu file JSON)
+        const products = [
+            { id: 1, name: "Bolpoin Pilot BP-S", price: "Rp 15.000", priceNum: 15000, category: "alat-tulis", image: "https://ae01.alicdn.com/kf/Sc1b9dc3922074eccacf54faa63c0574ax.jpg", description: "Bolpoin Pilot BP-S dengan teknologi tinta Formula BPS yang halus, ujung bola stainless steel 0.7mm, dan desain ergonomis dengan grip karet untuk kenyamanan menulis lama." },
+            { id: 2, name: "Pensil 2B Faber-Castell", price: "Rp 5.000", priceNum: 5000, category: "alat-tulis", image: "https://storage.googleapis.com/eezee-product-images/pensil-2b-faber-castle-bj5k_600.png", description: "Pensil Faber-Castell 2B dengan teknologi Super Polymer Lead yang 4x lebih kuat dan tahan patah. Khusus untuk ujian scanner OMR, menghasilkan goresan jelas dengan ferrule logam dan penghapus premium non-merusak kertas." },
+            { id: 3, name: "Stabilo Boss Original", price: "Rp 18.000", priceNum: 18000, category: "alat-tulis", image: "https://down-id.img.susercontent.com/file/id-11134207-7rasc-m20h8gswkzv48a", description: "Highlighter Stabilo Boss dengan tinta berbasis water-based non-bleed yang tidak tembus kertas. Ujung chisel 2-5mm untuk garis tebal/tipis, warna fluorescent cerah, cepat kering, dan tahan luntur." },
+            { id: 4, name: "Buku Tulis Sidu 58 Lembar", price: "Rp 5.500", priceNum: 5500, category: "kertas-buku", image: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/103/MTA-141175399/brd-48790_buku-tulis-sidu-58_full01-fe242727.jpg", description: "Buku tulis Sidu 58 lembar dengan kertas HVS 70gr premium, tidak mudah sobek dan tembus tinta. Dilengkapi margin merah biru, cover plastik laminasi glossy, dan jahitan kuat." },
+            { id: 5, name: "Kertas HVS A4 80gr", price: "Rp 65.000", priceNum: 65000, category: "kertas-buku", image: "https://storage.googleapis.com/eezee-product-images/kertas-warna-a4-80gr-sinar-dunia-5ahh_600.png", description: "Kertas HVS A4 80gr dengan permukaan halus dan putih cerah, bebas serat kayu, cocok untuk printing laser/inkjet." },
+            { id: 6, name: "Binder A4 2 Ring", price: "Rp 25.000", priceNum: 25000, category: "kertas-buku", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3W-G-19XsGDXmPbXh5BlzDsBKTiqXeKbisA&s", description: "Binder A4 sistem 2 ring dengan kapasitas hingga 100 lembar. Cover plastik PVC tebal, ring metal kuat diameter 25mm, dilengkapi 5 divider dan 20 plastik folio solusi rapi untuk arsip dokumen." },
+            { id: 7, name: "Gunting Kertas Joyko", price: "Rp 18.000", priceNum: 18000, category: "perlengkapan", image: "https://storage.googleapis.com/eezee-product-images/gunting-sedang-838-joyko-pji1_600.png", description: "Gunting kertas Joyko dengan pisau stainless steel tajam yang dilapisi Teflon untuk potongan halus tanpa lengket." },
+            { id: 8, name: "Map Plastik 20 Lembar", price: "Rp 25.000", priceNum: 25000, category: "perlengkapan", image: "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-55449929/felix_map_file_clear_holder_f4_20_lembar_-_felix_murah_full01_z5x303v.jpg", description: "Set map plastik folio transparan 20 lembar dengan ketebalan 0.10mm. Tahan air, dilengkapi kantong samping, perforasi untuk binder, ideal untuk presentasi, portofolio, dan dokumen penting yang butuh perlindungan." },
+            { id: 9, name: "Stapler Max HD-50", price: "Rp 70.000", priceNum: 70000, category: "perlengkapan", image: "https://siopen.balangankab.go.id/storage/merchant/products/2024/06/13/3458162565e682ecd59ec85e9c506992.jpg", description: "Stapler Max HD-50 dengan kapasitas staples hingga 50 lembar kertas 70gr. Mekanisme full-strip, base rubber non-slip, dapat digunakan dengan berbagai ukuran staples, dilengkapi staple remover." }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Tampilkan produk
+        function displayProducts(productList) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+            
+            productList.forEach(product => {
+                const cartItem = cart.find(item => item.id === product.id);
+                const qty = cartItem ? cartItem.quantity : 0;
+                
+                const html = `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-price">${product.price}</div>
+                        
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="changeQuantity(${product.id}, -1)" ${qty === 0 ? 'disabled' : ''}>-</button>
+                            <span class="quantity-display" id="qty${product.id}">${qty}</span>
+                            <button class="quantity-btn" onclick="changeQuantity(${product.id}, 1)">+</button>
+                        </div>
+                        
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            ${qty > 0 ? `Update (${qty})` : 'Tambah ke Keranjang'}
+                        </button>
+                    </div>
+                `;
+                
+                container.innerHTML += html;
+            });
+        }
+
+        function changeQuantity(productId, change) {
+            const element = document.getElementById(`qty${productId}`);
+            let qty = parseInt(element.textContent) + change;
+            if (qty < 0) qty = 0;
+            element.textContent = qty;
+            
+            // Update tombol minus
+            const card = element.closest('.product-card');
+            const minusBtn = card.querySelector('.quantity-control button:first-child');
+            minusBtn.disabled = qty === 0;
+            
+            // Update tombol keranjang
+            const cartBtn = card.querySelector('.add-to-cart-btn');
+            cartBtn.textContent = qty > 0 ? `Update (${qty})` : 'Tambah ke Keranjang';
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const qty = parseInt(document.getElementById(`qty${productId}`).textContent);
+            
+            const index = cart.findIndex(item => item.id === productId);
+            
+            if (qty === 0) {
+                if (index !== -1) {
+                    cart.splice(index, 1);
+                    alert(`${product.name} dihapus dari keranjang`);
+                }
+            } else {
+                if (index !== -1) {
+                    cart[index].quantity = qty;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: product.name,
+                        price: product.price,
+                        priceNum: product.priceNum,
+                        quantity: qty,
+                        image: product.image
+                    });
+                }
+                alert(`${product.name} ditambahkan (${qty} pcs)`);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = total;
+        }
+
+        function filterProducts(category) {
+            // Update tombol aktif
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                displayProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                displayProducts(filtered);
+            }
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts(products);
+            updateCartCount();
+            
+            // Toggle menu untuk mobile
+            document.getElementById('menuToggle').addEventListener('click', function() {
+                document.querySelector('nav').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

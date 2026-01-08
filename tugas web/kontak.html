@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak AryaStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="store.html" class="logo">Arya<span>Store</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="produk.html"><i class="fas fa-box"></i> Produk ATK</a></li>
+                    <li><a href="keranjang.html"><i class="fas fa-shopping-cart"></i> Keranjang <span class="cart-count">0</span></a></li>
+                    <li><a href="tentang.html"><i class="fas fa-info-circle"></i> Tentang Kami</a></li>
+                    <li><a href="kontak.html" class="active"><i class="fas fa-envelope"></i> Kontak</a></li>
+                    <li><a href="checkout.html" class="checkout-btn"><i class="fas fa-credit-card"></i> Checkout</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title"><i class="fas fa-envelope"></i> Hubungi Kami</h1>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2>Informasi Kontak</h2>
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Alamat:</strong> Jl. Jeruk No. 45, Jakarta</p>
+                <p><i class="fas fa-phone"></i> <strong>Telepon:</strong> (0812) 8765-4321</p>
+                <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@aryastore.com</p>
+                <p><i class="fas fa-clock"></i> <strong>Jam Operasional:</strong> Senin - Jumat: 08:00 - 17:00</p>
+                
+                <h2>Kirim Pesan</h2>
+                <div class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Nama Lengkap">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" placeholder="Pesan Anda" rows="5"></textarea>
+                    </div>
+                    <button id="sendMessage" class="btn">Kirim Pesan</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arya<span>Store</span></h3>
+                    <p>Sebagai toko alat tulis kantor online terpercaya sejak 2018, ATK Store berkomitmen untuk menyediakan produk-produk berkualitas dari merek ternama dengan harga yang kompetitif. 
+        Kami memahami bahwa alat tulis yang baik dapat meningkatkan produktivitas dan kreativitas, oleh karena itu kami hanya menghadirkan produk terbaik untuk mendukung aktivitas 
+        pendidikan, profesional, dan bisnis Anda.</p>
+        <p>Dengan layanan pelanggan yang responsif dan sistem pengiriman yang efisien, kami siap menjadi partner terpercaya untuk semua 
+        kebutuhan alat tulis Anda.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="produk.html">Produk ATK</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hubungi Kami</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Jeruk No. 45, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> (0812) 8765-4321</p>
+                    <p><i class="fas fa-envelope"></i> info@aryastore.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AryaStore - Toko Alat Tulis </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle menu untuk mobile
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+        
+        // Update jumlah item di keranjang
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.querySelector('.cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, isSuccess = true) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: ${isSuccess ? '#2ecc71' : '#e74c3c'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${isSuccess ? 'check-circle' : 'exclamation-circle'}" style="margin-right: 10px;"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Event listener untuk tombol kirim pesan
+        document.getElementById('sendMessage').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (!name || !email || !message) {
+                showNotification('Harap lengkapi semua field!', false);
+                return;
+            }
+            
+            // Simulasi pengiriman pesan
+            showNotification('Pesan Anda telah berhasil dikirim!');
+            
+            // Reset form
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+        });
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
